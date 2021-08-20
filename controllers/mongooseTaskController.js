@@ -4,7 +4,7 @@ const sendResponse = require("../utils/sendResponse");
 
 let resData;
 
-const getAllTasks = async (req,res) =>{
+const getAllTasks = async (req, res) =>{
     resData = await Task.find();
     return sendResponse({
         res,
@@ -17,7 +17,7 @@ const getAllTasks = async (req,res) =>{
 const getTaskByTaskId = async (req, res) => {
     let { taskId } = req.params;
 
-    resData = await Task.findOne({ taskId: taskId });
+    resData = await Task.findOne({ taskId });
 
     if(!resData){
         return sendResponse({
@@ -37,6 +37,15 @@ const getTaskByTaskId = async (req, res) => {
 
 const addTask = async (req, res) => {
     const { content, createdAt, updatedAt} = req.body;
+
+    if(req.body.isComplete || req.body.taskId){
+        return sendResponse({
+            res,
+            statusCode: 400,
+            message: "Invalid Request",
+            error: "Invalid Request",
+        });
+    }
     try{
         let newTask = new Task({
             taskId : uniqid(),
@@ -99,16 +108,16 @@ const deleteTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const { taskId } = req.params;
-    // if(!req.body.){
-    //     return sendResponse({
-    //         res,
-    //         statusCode: 400,
-    //         message: "Bad Request. isComplete required",
-    //         error: error,
-    //     });
-    // }
-
     const { content, updatedAt, createdAt, isComplete } = req.body;
+
+    if(isComplete == null || req.body.taskId){
+        return sendResponse({
+            res,
+            statusCode: 400,
+            message: "Invalid Request",
+            error: "Invalid Request",
+        });
+    }
 
     try{
         resData = await Task.findOneAndUpdate({ taskId },{ $set: { content, updatedAt, isComplete, createdAt } }, { new: true, runValidators: true });
