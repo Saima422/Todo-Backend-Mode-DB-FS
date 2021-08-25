@@ -3,7 +3,7 @@
 
 ## Introduction
 
-A simple backend server for ToDo Application created with Node.js and using File System(JSON File) for storing Data. Built with an aim to provide a backend for Todo Application. Server supports API calls for Adding, Fetching and Deleting Todo.
+A simple backend server for ToDo Application created with Node.js and using Database(MongoDB) and File System(JSON File) for storing Data. This functionality is implemented using Adapter where the user can specify the mode in which it wants to operate the backend. The available options are 'database' and 'file'. This project is built with an aim to provide a backend for Todo Application. Server supports API calls for Adding, Fetching and Deleting Todo.
 
 ## Technologies
 
@@ -20,6 +20,7 @@ To get a local copy up and running follow these simple steps.
 
 To clone and run this application, you'll need [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Node.js](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04) (which comes with npm) installed on your computer.
 
+
 ### Installation
 
 From your command line:
@@ -32,6 +33,10 @@ From your command line:
    ```sh
    $ npm install
    ```
+
+3. Before starting the application set Config Variables in the 'config.env' file. A sample 'config.env' is provided in the Github repo. <br>
+The server is by default set to the 'database' mode. To change the mode of the server edit the OPERATION_MODE = 'file' in 'config.env' file 
+
 4. Run the app
    ```JS
    $ npm run start
@@ -201,7 +206,7 @@ Returns json data containing the message and added task.
 
 * **Data Params**
 
-	`{ "content": [String], "createdAt": [Time(HH MM) Date(DD/MM/YY)], "updatedAt": [ime(HH MM) Date(DD/MM/YY)}`
+	`{ "content": [String], "createdAt": [Time(H:M:S or HH:MM:SS) Date(DD/MM/YYYY)], "updatedAt": [Time(H:M:S or HH:MM:SS) Date(DD/MM/YYYY)]}`
 
 * **Success Response:**
 
@@ -294,7 +299,7 @@ Returns json data containing the message and Updated task.
 
 * **Data Params**
 
-	`{ "content": [String], "createdAt": [Time(HH MM) Date(DD/MM/YY)], "updatedAt": [ime(HH MM) Date(DD/MM/YY)}, "isComplete": [Boolean]}`
+	`{ "content": [String], "createdAt": [Time(H:M:S or HH:MM:SS) Date(DD/MM/YYYY)], "updatedAt": [Time(H:M:S or HH:MM:SS) Date(DD/MM/YYYY)], "isComplete": [Boolean]}`
 
 * **Success Response:**
 
@@ -444,18 +449,27 @@ View all Sample Requests in POSTMAN.<br>
 ## Folder Structure
 ```
 ├── app.js
+├── server.js
 ├── controllers
 │   └── taskController.js
+│   └── mongooseTaskController.js
 ├── data
 │   └── tasks.json
 ├── models
 │   └── taskModel.js
+│   └── taskSchema.js
+├── public
+│   └── index.html
 ├── package.json
 ├── package-lock.json
+├── _.config.yml
+├── config.env
+├── README.md
 ├── routes
 │   └── taskRouter.js
 └── utils
     └── sendResponse.js
+    └── switch.js
 ```
 
 ## Scope and Functionality
@@ -466,9 +480,7 @@ View all Sample Requests in POSTMAN.<br>
 * Add a New Todo
 * Update an existing Todo by providing Todo ID
 * Delete an existing Todo by providing Todo ID
-
-#### Remaining Todo: 
-* Add a Database for storing the Todos/Tasks
+* MongoDB Database for storing the Todos/Tasks
 
 ## Sources
 
@@ -480,11 +492,13 @@ View all Sample Requests in POSTMAN.<br>
 
 Author - Saima Sayed 
 <br>
-Project Resources (Backend) - https://github.com/Saima422/ToDo-Backend-Node.js
+[Project Resources (Backend-MongoDB and File System)](https://github.com/Saima422/Todo-Backend-Mode-DB-FS)
 <br>
-LinkedIn - https://www.linkedin.com/in/saima-sayed-6482481b9/
+[Project Resources (Backend-File System)](https://github.com/Saima422/ToDo-Backend-Node.js)
 <br>
-Hosted Server on Heroku - https://rocky-ocean-88181.herokuapp.com/
+[LinkedIn](https://www.linkedin.com/in/saima-sayed-6482481b9/)
+<br>
+[Hosted Server on Heroku](https://todo-backend-mode-db-fs.herokuapp.com/)
 
 ## Also Refer
 You can also refer to the fontend Todo-List project integrated with this backend repo <br>
