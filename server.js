@@ -5,7 +5,7 @@ const app = require('./app');
 
 switch(process.env.OPERATION_MODE){
     case "database":
-        mongoose.connect(process.env.MONGO_URI, {
+        mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useCreateIndex: true,
             useFindAndModify: false,
